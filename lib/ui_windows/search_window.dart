@@ -11,6 +11,8 @@ class SearchWindow extends StatefulWidget {
 
 }
 
+//TEST
+
 class _SearchWindow extends State<SearchWindow>{
   late String cocktailName;
 
