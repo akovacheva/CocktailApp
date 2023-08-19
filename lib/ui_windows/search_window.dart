@@ -1,27 +1,27 @@
-import 'package:cocktailapp/constraints.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:cocktailapp/constraints.dart';
 import 'package:cocktailapp/services/cocktail_manager.dart';
 import 'package:http/http.dart';
 import 'package:cocktailapp/services/ingredients.dart';
-import 'dart:convert';
-import 'package:cocktailapp/constraints.dart';
+import 'package:cocktailapp/ui_windows/result_window.dart';
 import 'package:cocktailapp/main.dart';
+// import 'package:flutter/cupertino.dart';
 
 class SearchWindow extends StatefulWidget {
-
   @override
   _SearchWindow createState() => _SearchWindow();
 
 }
 
 class _SearchWindow extends State<SearchWindow>{
-  late String cocktailName;
+  String cocktailName = "";
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( appBar: CommonAppBar(),
+    return Scaffold(
+      appBar: CommonAppBar(),
     body: SingleChildScrollView(
     child: Padding(
       padding: EdgeInsets.all(20.0),
@@ -112,6 +112,7 @@ class _SearchWindow extends State<SearchWindow>{
           //call info from db
           var network = await get(Uri.parse(mainUrl + cocktailName));
           var json = jsonDecode(network.body);
+          print(network.body);
 
           cm.name = json['drinks'][0]['strDrink'];
           cm.alcoholic = json['drinks'][0]['strAlcoholic'];
@@ -127,10 +128,13 @@ class _SearchWindow extends State<SearchWindow>{
             strIngredientName = 'strIngredient' + i.toString();
             strIngredientMeasure = 'strMeasure' + i.toString();
 
+            String ingredientName = json['drinks'][0][strIngredientName] ?? '';
+            String ingredientMeasure = json['drinks'][0][strIngredientMeasure] ?? '';
+
             ingrdientList.add(
               Ingredients(
-                name: json['drinks'][0][strIngredientName],
-                mesure: json['drinks'][0][strIngredientMeasure],
+                name: ingredientName,
+                mesure: ingredientMeasure,
               ),
             );
           }
@@ -146,7 +150,22 @@ class _SearchWindow extends State<SearchWindow>{
 
           cm.ingredients = ingrdientList;
 
-        }, child: Text("Search"),
+          // put the other window on top of it, so we dont close it
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return ResultWindow(
+                  name: cm.name,
+                  category: cm.category,
+                  alcoholic: cm.alcoholic,
+                  glassType: cm.glassType,
+                  pictureUrl: cm.pictureUrl,
+                  instructions: cm.instructions,
+                  ingredients: cm.ingredients);
+            }),
+          );
+        },
+          child: Text("Search"),
         style: ElevatedButton.styleFrom(
           backgroundColor:btnColor,
           shape: RoundedRectangleBorder(
