@@ -7,7 +7,8 @@ import 'package:http/http.dart';
 import 'package:cocktailapp/services/ingredients.dart';
 import 'package:cocktailapp/ui_windows/result_window.dart';
 import 'package:cocktailapp/main.dart';
-// import 'package:flutter/cupertino.dart';
+import 'package:cocktailapp/components/random_cocktail_widget.dart';
+
 
 class SearchWindow extends StatefulWidget {
   @override
@@ -27,55 +28,10 @@ class _SearchWindow extends State<SearchWindow>{
       padding: EdgeInsets.all(20.0),
       child: Column(
       children: [
-        const SizedBox(height: 100,),
-        // Picture in a Box
         Container(
-          width: 130, // Adjust the width of the box
-          height: 130, // Adjust the height of the box
-          decoration: BoxDecoration(
-            color: Colors.white, // Set the color of the box
-            borderRadius: BorderRadius.circular(10), // Set border radius
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2), // Add shadow
-                offset: Offset(0, 2),
-                blurRadius: 4,
-              ),
-            ],
-          ),
-          child: Image.asset(
-            "assets/images/blue.png", // Replace with your image asset path
-            fit: BoxFit.cover,
-          ),
-        ),
-        // Text Box with Surrounding Border
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black, // Border color
-              width: 1, // Border width
-            ),
-            borderRadius: BorderRadius.circular(15), // Border radius
-          ),
-          padding: EdgeInsets.all(10), // Padding inside the container
-          child: const Column(
-            children: [
-              Text(
-                "Cocktail Of The day",
-                style: TextStyle(fontSize: 20), // Customize text style
-              ),
-              Text(
-                // cocktailName ?? '', // Display the text -> when we add api
-                "Blue lagoon",
-                style: TextStyle(fontSize: 15), // Customize text style
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: null,
-                child: Text("More"),
-              ),
-            ],
-          ),
+          height: 300.0, // Adjust the height as needed
+          color: Colors.transparent,
+          child: RandomCocktailWidget(),
         ),
         const SizedBox(height: 50,),
         //input
@@ -185,6 +141,7 @@ class _SearchWindow extends State<SearchWindow>{
             minimumSize: btnMinSize,
           ),
         ),
+
       ],),
     ),
     ),
