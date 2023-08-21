@@ -60,6 +60,8 @@ class _RandomCocktailWidgetState extends State<RandomCocktailWidget> {
                   cocktailName,
                   style: TextStyle(fontSize: 15,
                     fontWeight: FontWeight.bold,),
+                  softWrap: false,
+                  overflow: TextOverflow.fade,
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
