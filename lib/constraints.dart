@@ -8,6 +8,7 @@ const txtFieldBorderColor = Colors.grey;
 const focusedTxtFieldBorderColor = Colors.lightBlue;
 const btnColor = Colors.blueGrey;
 const containerColor = Colors.black12;
+const titleColor = Color(0xFF003366);
 
 const borderSide = BorderSide(
   color: focusedTxtFieldBorderColor,

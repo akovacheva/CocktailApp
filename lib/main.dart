@@ -1,5 +1,6 @@
 import 'package:cocktailapp/constraints.dart';
 import 'package:cocktailapp/ui_windows/search_window.dart';
+import 'package:cocktailapp/ui_windows/signIn_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cocktailapp/ui_windows/profile_window.dart';
@@ -39,7 +40,7 @@ class MyCocktailApp extends StatelessWidget {
             ),
           ),
           // Main Content
-          SearchWindow(),
+          SignInWindow(),
         ],
       ),
     );
@@ -57,7 +58,18 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
     backgroundColor: appBarColor, // Set transparent background
-    title: const Text('DRINKY'),
+        title: Text("Drinky",
+          style: TextStyle(
+            fontStyle: FontStyle.italic, // Change to your desired font style
+            color: titleColor, // Change to your desired text color
+            fontSize: 20, // Change to your desired font size
+            fontWeight: FontWeight.bold, // Optionally, set font weight
+          ),),
+        centerTitle: true,
+      // leading:
+      // Image.asset(
+      //     "assets/images/logob.png",
+      // ),
     actions: [
     IconButton(
     icon: const Icon(Icons.person),

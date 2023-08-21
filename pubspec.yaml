@@ -67,6 +67,8 @@ flutter:
      - assets/images/alcohol-bar-beer-beverage.jpg
      - assets/images/blue.png
      - assets/images/my_cocktails_image.png
+     - assets/images/logo.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
