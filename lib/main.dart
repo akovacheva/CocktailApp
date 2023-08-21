@@ -40,7 +40,7 @@ class MyCocktailApp extends StatelessWidget {
             ),
           ),
           // Main Content
-          SearchWindow(),
+          SignInWindow(),
         ],
       ),
     );
