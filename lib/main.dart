@@ -2,6 +2,7 @@ import 'package:cocktailapp/constraints.dart';
 import 'package:cocktailapp/ui_windows/search_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cocktailapp/ui_windows/profile_window.dart';
 
 void main() {
   //portrait mode
@@ -61,8 +62,11 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     IconButton(
     icon: const Icon(Icons.person),
     onPressed: () {
-    // Implement your profile functionality here
-    },
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileScreen()),
+      );
+      },
     ),
     ],
     );
