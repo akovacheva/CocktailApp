@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+
 import '../constraints.dart';
 import '../main.dart';
+import '../models/cocktail_model.dart';
 import 'add_your_own_recipe_window.dart';
+import 'my_cocktails_window.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  List<Cocktail> savedCocktails = []; // List to store saved cocktails
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,19 +26,29 @@ class ProfileScreen extends StatelessWidget {
             children: [
               SizedBox(height: 50),
               ElevatedButtonWithIcon(
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  final newCocktail = await Navigator.push<Cocktail>(
                     context,
                     MaterialPageRoute(
                         builder: (context) => AddYourOwnRecipeScreen()),
                   );
+                  if (newCocktail != null) {
+                    setState(() {
+                      savedCocktails.add(newCocktail);
+                    });
+                  }
                 },
                 buttonText: 'Add your own Recipe',
               ),
               SizedBox(height: 60),
               ElevatedButton(
                 onPressed: () {
-                  // Implement functionality for the "My Cocktails" button
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MyCocktailsScreen(savedCocktails)),
+                  );
                 },
                 child: Text('My Cocktails'),
                 style: ElevatedButton.styleFrom(
