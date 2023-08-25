@@ -72,7 +72,8 @@ class _SignInWindowState extends State<SignInWindow> {
         const Text(
           "Don't have an account?",
           style: TextStyle(
-            color: Colors.white70),),
+            color: Colors.white,
+            decoration: TextDecoration.underline,),),
         GestureDetector(
           onTap: () {
             Navigator.push(context,
@@ -80,7 +81,10 @@ class _SignInWindowState extends State<SignInWindow> {
           },
           child: const Text(
             "Register",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              decoration: TextDecoration.underline,),
           ),
         )
       ],

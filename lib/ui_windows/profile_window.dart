@@ -18,7 +18,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(),
-      body: Center(
+      body:Container(
+        width: MediaQuery.of(context).size.width ,
+    height: MediaQuery.of(context).size.height,
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/images/bottles.png"),
+    opacity: 0.6,
+    fit: BoxFit.cover,
+    )
+    ),
+      child: Center(
         child: Padding(
           padding: const EdgeInsets.all(30),
           child: Column(
@@ -61,10 +71,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(height: 60),
-              Image.asset('assets/images/my_cocktails_image.png'),
+              // Image.asset('assets/images/my_cocktails_image.png'),
             ],
           ),
         ),
+      ),
       ),
     );
   }

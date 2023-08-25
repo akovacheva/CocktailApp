@@ -21,7 +21,18 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(),
-      body: SingleChildScrollView(
+      body:
+    Container(
+    width: MediaQuery.of(context).size.width ,
+    height: MediaQuery.of(context).size.height,
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/images/bottles.png"),
+    opacity: 0.6,
+    fit: BoxFit.cover,
+    )
+    ),
+     child:  SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12.0, 50.0, 12.0, 12.0),
           child: Column(
@@ -47,12 +58,12 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
                   height: 180,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.black45,
                     border: Border.all(width: 3, color: btnColor),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: const Text(
-                    'Upload your Image',
+                    'Upload Image',
                     style: TextStyle(fontSize: 20, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
@@ -99,6 +110,12 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
               TextField(
                 controller: _cocktailNameController,
                 decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.local_drink,
+                      color: Colors.black45,
+                    ),
+                  filled: true,
+                  fillColor: Colors.white54,
                   hintText: 'Cocktail Name',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -110,6 +127,12 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
                 controller: _cocktailDescriptionController,
                 maxLines: 3,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.description,
+                    color: Colors.black45,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white54,
                   hintText: 'Cocktail Description',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -137,6 +160,7 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 

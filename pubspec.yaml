@@ -70,6 +70,10 @@ flutter:
      - assets/images/blue.png
      - assets/images/my_cocktails_image.png
      - assets/images/logo.png
+     - assets/images/logob.png
+     - assets/images/bottles.png
+     - assets/images/black.png
+     - assets/images/white-no-background.png
 
   #   - images/a_dot_ham.jpeg
 

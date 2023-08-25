@@ -30,7 +30,17 @@ class ResultWindow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(),
-      body: SafeArea(
+    body:Container(
+    width: MediaQuery.of(context).size.width ,
+    height: MediaQuery.of(context).size.height,
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/images/bottles.png"),
+    opacity: 0.6,
+    fit: BoxFit.cover,
+    )
+    ),
+     child: SafeArea(
         child: Column(
           //za so ekranot
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -92,6 +102,7 @@ class ResultWindow extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }

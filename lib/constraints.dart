@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 const mainUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 const randomUrl = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-const appBarColor = Colors.transparent;
+const appBarColor = Colors.black54;
 const iconsColor = Colors.black;
 const txtFieldBorderColor = Colors.grey;
 const focusedTxtFieldBorderColor = Colors.lightBlue;
-const btnColor = Colors.blueGrey;
-const containerColor = Colors.black12;
+const btnColor = Colors.black54;
+const containerColor = Colors.white54;
 const titleColor = Color(0xFF003366);
 
 const borderSide = BorderSide(
   color: focusedTxtFieldBorderColor,
   width: 5
 );
+
+
 
 const txtHeader = TextStyle(
     fontSize: 30,

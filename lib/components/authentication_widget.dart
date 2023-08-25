@@ -9,6 +9,15 @@ Image logoWidget(String imageName){
     color: Colors.white,
   );
 }
+Image logoWidgetSmaller(String imageName){
+  return Image.asset(
+    imageName,
+    fit: BoxFit.fitWidth,
+    width: 150,
+    height: 150,
+    color: Colors.white,
+  );
+}
 
 TextField inputField(String text, IconData icon, bool isPasswordType,
   TextEditingController controller){
@@ -16,18 +25,18 @@ TextField inputField(String text, IconData icon, bool isPasswordType,
     obscureText: isPasswordType,
     enableSuggestions: !isPasswordType,
     autocorrect: !isPasswordType,
-    cursorColor: Colors.white,
-    style: TextStyle(color: Colors.white.withOpacity(0.9)),
+    cursorColor: Colors.black45,
+    style: TextStyle(color: Colors.black12.withOpacity(0.9)),
     decoration: InputDecoration(
         prefixIcon: Icon(
           icon,
-          color: Colors.white70,
+          color: Colors.black45,
         ),
     labelText: text,
-    labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
+    labelStyle: TextStyle(color: Colors.black12.withOpacity(0.9)),
     filled: true,
     floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.white.withOpacity(0.6),
+      fillColor: Colors.white.withOpacity(0.9),
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.0),
           borderSide: const BorderSide(width: 0, style: BorderStyle.none ))

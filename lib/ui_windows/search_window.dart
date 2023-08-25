@@ -23,16 +23,29 @@ class _SearchWindow extends State<SearchWindow>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(showBackButton: false),
-    body: SingleChildScrollView(
+    body: Container(
+    width: MediaQuery.of(context).size.width ,
+    height: MediaQuery.of(context).size.height,
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/images/bottles.png"),
+    opacity: 0.6,
+    fit: BoxFit.cover,
+    )
+    ),
+    child:SingleChildScrollView(
     child: Padding(
       padding: EdgeInsets.all(20.0),
-      child: Column(
-      children: [
-        Container(
-          height: 300.0, // Adjust the height as needed
-          color: Colors.transparent,
-          child: RandomCocktailWidget(),
-        ),
+    child: Container( // Wrap the Column with a Container
+    constraints: BoxConstraints(maxHeight: 580), // Set a maximum height constraint
+    child: Column(
+    children: [
+    Expanded( // Use Expanded around the Container
+    child: Container(
+    color: Colors.transparent,
+    child: RandomCocktailWidget(),
+    ),
+    ),
         const SizedBox(height: 50,),
         //input
        TextField(
@@ -41,11 +54,17 @@ class _SearchWindow extends State<SearchWindow>{
            cocktailName = value;
          },
          decoration: InputDecoration(
+           prefixIcon: Icon(
+             Icons.search,
+             color: Colors.black45,
+           ),
+           filled: true,
+           fillColor: Colors.white54,
            hintText: "Search for a cocktail",
            enabledBorder: OutlineInputBorder(
              borderRadius: BorderRadius.circular(15),
              borderSide: const BorderSide(
-               color: txtFieldBorderColor, // Change to the desired color
+               color: txtFieldBorderColor,
                width: 2, // Adjust the border width as needed
              ),
            ),
@@ -143,6 +162,8 @@ class _SearchWindow extends State<SearchWindow>{
         ),
 
       ],),
+    ),
+    ),
     ),
     ),
     );

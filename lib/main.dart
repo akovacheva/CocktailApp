@@ -50,11 +50,11 @@ class MyCocktailApp extends StatelessWidget {
   }
 }
 
-
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
-  const CommonAppBar({Key? key, this.showBackButton = true})
-      : super(key: key);
+  final String? username;
+  const CommonAppBar({Key? key, this.username, this.showBackButton = true})
+        : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
@@ -63,18 +63,22 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(automaticallyImplyLeading: showBackButton,
     backgroundColor: appBarColor, // Set transparent background
-        title: Text("Drinky",
-          style: TextStyle(
-            fontStyle: FontStyle.italic, // Change to your desired font style
-            color: titleColor, // Change to your desired text color
-            fontSize: 20, // Change to your desired font size
-            fontWeight: FontWeight.bold, // Optionally, set font weight
-          ),),
+        title:
+        Image.asset(
+          //need to choose
+          "assets/images/white-no-background.png",
+          // "assets/images/black.png",
+          width: 100,
+          height: 100,
+        ),
+        // Text(
+        //   username ?? "Drinky",
+        //   style: TextStyle(
+        //     fontStyle: FontStyle.italic,
+        //     color: titleColor,
+        //     fontSize: 20,
+        //     fontWeight: FontWeight.bold,
         centerTitle: true,
-      // leading:
-      // Image.asset(
-      //     "assets/images/logob.png",
-      // ),
     actions: [
     IconButton(
     icon: const Icon(Icons.person),

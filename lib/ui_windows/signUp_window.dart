@@ -43,6 +43,7 @@ class _SignUpWindowState extends State<SignUpWindow> {
                 padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
                 child: Column(
                   children: <Widget>[
+                    logoWidgetSmaller("assets/images/logo.png"),
                     const SizedBox(
                       height: 20,
                     ),

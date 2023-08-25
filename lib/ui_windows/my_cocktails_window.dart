@@ -11,7 +11,17 @@ class MyCocktailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(),
-      body: ListView.builder(
+    body:Container(
+    width: MediaQuery.of(context).size.width ,
+    height: MediaQuery.of(context).size.height,
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/images/bottles.png"),
+    opacity: 0.6,
+    fit: BoxFit.cover,
+    )
+    ),
+      child: ListView.builder(
         itemCount: cocktails.length,
         itemBuilder: (context, index) {
           final cocktail = cocktails[index];
@@ -32,6 +42,7 @@ class MyCocktailsScreen extends StatelessWidget {
           );
         },
       ),
+    ),
     );
   }
 }
