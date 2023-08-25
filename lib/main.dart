@@ -1,57 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:cocktailapp/constraints.dart';
 import 'package:cocktailapp/ui_windows/signIn_window.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:cocktailapp/ui_windows/profile_window.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:flutter_config/flutter_config.dart';
+import 'models/cocktail_model.dart';
 
-void main() async{
-  //portrait mode
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => runApp(const MyCocktailApp()));
-
-  WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   await FlutterConfig.loadEnvVariables();
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CocktailProvider(),
+      child: const MyCocktailApp(),
+    ),
+  );
 }
 
 class MyCocktailApp extends StatelessWidget {
-  const MyCocktailApp({super.key});
-
+  const MyCocktailApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
         appBarTheme: const AppBarTheme(
           backgroundColor: appBarColor,
-          iconTheme: IconThemeData(color: iconsColor), // Customize icon color
+          iconTheme: IconThemeData(color: iconsColor),
         ),
-      //Promena na pozadina
-        // scaffoldBackgroundColor: const Color(0xFF1f2129)
       ),
       home: Stack(
         children: [
-          // Background Image
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/alcohol-bar-beer-beverage.jpg"), // Replace with your image asset path
-                fit: BoxFit.cover, // Adjust how the image should fit the container
+                image: AssetImage("assets/images/alcohol-bar-beer-beverage.jpg"),
+                fit: BoxFit.cover,
               ),
             ),
           ),
-          // Main Content
-          // SignInWindow(),
           SignInWindow(),
         ],
       ),
     );
+  }
+}
+
+class CocktailProvider with ChangeNotifier {
+  List<Cocktail> _cocktails = [];
+
+  List<Cocktail> get cocktails => _cocktails;
+
+  void addCocktail(Cocktail cocktail) {
+    _cocktails.add(cocktail);
+    notifyListeners();
   }
 }
 

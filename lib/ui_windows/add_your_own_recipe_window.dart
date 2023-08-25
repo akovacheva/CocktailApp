@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import '../constraints.dart';
 import '../main.dart';
 import '../models/cocktail_model.dart';
@@ -189,7 +190,10 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
         description: _cocktailDescriptionController.text,
       );
 
-      Navigator.pop(context, newCocktail);
+      final cocktailProvider = Provider.of<CocktailProvider>(context, listen: false);
+      cocktailProvider.addCocktail(newCocktail);
+
+      Navigator.pop(context); // Close the screen
     } else {
       // Show an alert dialog if any field is empty
       showDialog(
@@ -211,7 +215,6 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
       );
     }
   }
-
 
   @override
   void dispose() {
