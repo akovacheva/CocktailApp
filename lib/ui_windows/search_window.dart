@@ -9,11 +9,11 @@ import 'package:cocktailapp/ui_windows/result_window.dart';
 import 'package:cocktailapp/main.dart';
 import 'package:cocktailapp/components/random_cocktail_widget.dart';
 
+import 'map.dart';
 
 class SearchWindow extends StatefulWidget {
   @override
   _SearchWindow createState() => _SearchWindow();
-
 }
 
 class _SearchWindow extends State<SearchWindow>{
@@ -26,7 +26,7 @@ class _SearchWindow extends State<SearchWindow>{
     body: Container(
     width: MediaQuery.of(context).size.width ,
     height: MediaQuery.of(context).size.height,
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
     image: DecorationImage(
     image: AssetImage("assets/images/bottles.png"),
     opacity: 0.6,
@@ -54,7 +54,7 @@ class _SearchWindow extends State<SearchWindow>{
            cocktailName = value;
          },
          decoration: InputDecoration(
-           prefixIcon: Icon(
+           prefixIcon: const Icon(
              Icons.search,
              color: Colors.black45,
            ),
@@ -151,16 +151,21 @@ class _SearchWindow extends State<SearchWindow>{
         ),
         const SizedBox(height: 20,),
         //random button
-        ElevatedButton(onPressed: () {}, child: Text("Make your own cocktail"),
+        ElevatedButton(onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Map()),
+          );
+        }, child: Text("Map"),
           style: ElevatedButton.styleFrom(
             backgroundColor:btnColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(20),
             ),
             minimumSize: btnMinSize,
           ),
         ),
-
       ],),
     ),
     ),

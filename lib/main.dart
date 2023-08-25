@@ -1,5 +1,4 @@
 import 'package:cocktailapp/constraints.dart';
-import 'package:cocktailapp/ui_windows/search_window.dart';
 import 'package:cocktailapp/ui_windows/signIn_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,12 +6,17 @@ import 'package:cocktailapp/ui_windows/profile_window.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:flutter_config/flutter_config.dart';
+
 void main() async{
   //portrait mode
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(const MyCocktailApp()));
+
+  WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
+  await FlutterConfig.loadEnvVariables();
 }
 
 class MyCocktailApp extends StatelessWidget {
@@ -43,6 +47,7 @@ class MyCocktailApp extends StatelessWidget {
             ),
           ),
           // Main Content
+          // SignInWindow(),
           SignInWindow(),
         ],
       ),

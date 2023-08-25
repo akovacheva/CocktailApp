@@ -27,6 +27,9 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 //id("com.google.gms.google-services")
 apply plugin: 'com.google.gms.google-services'
 
+
+apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
+
 android {
     namespace "com.example.cocktailapp"
     compileSdkVersion flutter.compileSdkVersion
@@ -50,6 +53,8 @@ android {
         applicationId "com.example.cocktailapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+
+        minSdkVersion 20
 //        minSdkVersion flutter.minSdkVersion
         minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
