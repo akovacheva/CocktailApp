@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cocktailapp/components/authentication_widget.dart';
 import 'package:cocktailapp/ui_windows/signUp_window.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cocktailapp/ui_windows/search_window.dart';
 class SignInWindow extends StatefulWidget {
   const SignInWindow({super.key});
 
@@ -46,7 +47,15 @@ class _SignInWindowState extends State<SignInWindow> {
                 SizedBox(
                   height: 20,
                 ),
-                signInSignUpButton(context, true, (){}),
+                signInSignUpButton(context, true, () {
+                  FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text).then((value){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchWindow()));
+                  });
+                }),
                 signUpOption(),
               ],
             ),

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "905984103750",
+    "project_id": "cocktailapp-7baae",
+    "storage_bucket": "cocktailapp-7baae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905984103750:android:72e83e34cca51917290147",
+        "android_client_info": {
+          "package_name": "com.example.cocktailapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905984103750-turo75gjur2k6qafviam2j12sca1cntu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cocktailapp",
+            "certificate_hash": "0c4e3d090ea9445a7a903a1f0e90d5566d653ae8"
+          }
+        },
+        {
+          "client_id": "905984103750-23evmceu42soehjhfkp6nqsojbhrm7dv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALj8JDXDCpyZI3YvnncntRMHDTKtWInJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905984103750-23evmceu42soehjhfkp6nqsojbhrm7dv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

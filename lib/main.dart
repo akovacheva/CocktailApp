@@ -4,10 +4,13 @@ import 'package:cocktailapp/ui_windows/signIn_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cocktailapp/ui_windows/profile_window.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+void main() async{
   //portrait mode
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(const MyCocktailApp()));
 }
@@ -49,14 +52,16 @@ class MyCocktailApp extends StatelessWidget {
 
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CommonAppBar({super.key});
+  final bool showBackButton;
+  const CommonAppBar({Key? key, this.showBackButton = true})
+      : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
+    return AppBar(automaticallyImplyLeading: showBackButton,
     backgroundColor: appBarColor, // Set transparent background
         title: Text("Drinky",
           style: TextStyle(
@@ -80,6 +85,17 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       );
       },
     ),
+      IconButton(
+        icon: const Icon(Icons.logout_outlined),
+        onPressed: () {
+          FirebaseAuth.instance.signOut().then((value) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SignInWindow()),
+            );
+          });
+        },
+      ),
     ],
     );
   }

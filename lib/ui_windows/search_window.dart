@@ -22,7 +22,7 @@ class _SearchWindow extends State<SearchWindow>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar(),
+      appBar: CommonAppBar(showBackButton: false),
     body: SingleChildScrollView(
     child: Padding(
       padding: EdgeInsets.all(20.0),

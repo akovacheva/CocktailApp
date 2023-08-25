@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cocktailapp/components/authentication_widget.dart';
 import 'package:cocktailapp/ui_windows/search_window.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpWindow extends StatefulWidget {
   const SignUpWindow({super.key});
@@ -68,10 +69,18 @@ class _SignUpWindowState extends State<SignUpWindow> {
                     //       .then((value) {
                     //     print("Created New Account");
                 signInSignUpButton(context, false, () {
+
+                  FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text)
+                      .then((value){
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SearchWindow()),
-                  );
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchWindow()));
+                  }).onError((error, stackTrace){
+                    print("Error ${error.toString()}");
+                  });
                 }),
 
                 // .onError((error, stackTrace) {
