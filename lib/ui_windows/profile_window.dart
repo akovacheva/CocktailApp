@@ -106,16 +106,16 @@ class ElevatedButtonWithIcon extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          right: 10,
-          bottom: 10,
-          child: FloatingActionButton(
-            onPressed: onPressed,
-            child: Icon(Icons.add),
-            backgroundColor: iconsColor,
-            mini: true, // Make the FloatingActionButton smaller
-          ),
-        ),
+        // Positioned(
+        //   right: 10,
+        //   bottom: 10,
+        //   child: FloatingActionButton(
+        //     onPressed: onPressed,
+        //     child: Icon(Icons.add_circle_outline),
+        //     backgroundColor: iconsColor,
+        //     mini: true, // Make the FloatingActionButton smaller
+        //   ),
+        // ),
       ],
     );
   }

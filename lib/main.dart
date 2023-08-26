@@ -78,19 +78,10 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     backgroundColor: appBarColor, // Set transparent background
         title:
         Image.asset(
-          //need to choose
           "assets/images/white-no-background.png",
-          // "assets/images/black.png",
           width: 100,
           height: 100,
         ),
-        // Text(
-        //   username ?? "Drinky",
-        //   style: TextStyle(
-        //     fontStyle: FontStyle.italic,
-        //     color: titleColor,
-        //     fontSize: 20,
-        //     fontWeight: FontWeight.bold,
         centerTitle: true,
     actions: [
     IconButton(

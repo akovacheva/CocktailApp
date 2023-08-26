@@ -64,8 +64,8 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: const Text(
-                    'Upload Image',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    'No image',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),

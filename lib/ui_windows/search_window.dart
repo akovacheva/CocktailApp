@@ -150,20 +150,27 @@ class _SearchWindow extends State<SearchWindow>{
         ),
         ),
         const SizedBox(height: 20,),
-        //random button
         ElevatedButton(onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => Map()),
           );
-        }, child: Text("Map"),
+        },
           style: ElevatedButton.styleFrom(
             backgroundColor:btnColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
             minimumSize: btnMinSize,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.map),
+              SizedBox(width: 8),
+              Text("Find a bar!"),
+            ],
           ),
         ),
       ],),

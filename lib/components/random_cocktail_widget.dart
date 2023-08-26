@@ -80,7 +80,12 @@ class _RandomCocktailWidgetState extends State<RandomCocktailWidget> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  child: Text("Random"),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.change_circle_outlined),
+                    ],
+                  ),
                 ),
 
               ],
