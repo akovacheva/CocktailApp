@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:cocktailapp/constraints.dart';
 
 import '../main.dart';
 
@@ -50,7 +53,27 @@ class _MapState extends State<Map> {
                       position: _userLocation)),
               );
             } else {
-              return Center(child: Text("Failed to get user location."));
+              // Center(child: Text("Failed to get user location."));
+              return Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    openAppSettings();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:btnColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    minimumSize: btnMinSize,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("Allow location permissions"),
+                    ],
+                  ),
+                ),
+              );
             }
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());

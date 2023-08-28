@@ -50,18 +50,19 @@ class MyCocktailsScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: btnColor,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                   minimumSize: btnMinSize,
                 ),
                 child: const Text(
-                  'Create your own cocktail',
+                  'Add',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
+
               ),
             ],
           ),

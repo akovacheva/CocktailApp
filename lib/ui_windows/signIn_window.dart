@@ -57,6 +57,7 @@ class _SignInWindowState extends State<SignInWindow> {
                   });
                 }),
                 signUpOption(),
+                skipOption(),
               ],
             ),
           ),
@@ -83,13 +84,30 @@ class _SignInWindowState extends State<SignInWindow> {
             "Register",
             style: TextStyle(color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 18,
-              decoration: TextDecoration.underline,),
+              fontSize: 18,),
           ),
         )
       ],
     );
-
+  }
+  Row skipOption(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SearchWindow()));
+          },
+          child: const Text(
+            "Skip",
+            style: TextStyle(color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,),
+          ),
+        )
+      ],
+    );
   }
 
 }

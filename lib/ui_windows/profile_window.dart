@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     });
                   }
                 },
-                buttonText: 'Add your own Recipe',
+                buttonText: 'Add a Recipe',
               ),
               SizedBox(height: 60),
               ElevatedButton(

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../constraints.dart';
 import '../main.dart';
 import '../models/cocktail_model.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AddYourOwnRecipeScreen extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
   TextEditingController _cocktailNameController = TextEditingController();
   TextEditingController _cocktailDescriptionController =
       TextEditingController();
+  bool isFirstCameraClick = true;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,7 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => getImage(source: ImageSource.camera),
+                      onPressed: () => captureImage(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: btnColor,
                         shape: RoundedRectangleBorder(
@@ -177,6 +179,24 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
       setState(() {
         imageFile = File(file!.path);
       });
+    }
+  }
+
+  Future<void> captureImage() async {
+    if (isFirstCameraClick) {
+      var status = await Permission.camera.request();
+      if (status.isGranted) {
+        getImage(source: ImageSource.camera);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Camera permission is required')),
+        );
+      }
+      // Mark the first click as done
+      isFirstCameraClick = false;
+    } else {
+      // Directly capture image
+      getImage(source: ImageSource.camera);
     }
   }
 

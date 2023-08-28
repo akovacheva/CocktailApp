@@ -6,6 +6,7 @@ import 'package:cocktailapp/constraints.dart';
 import 'package:cocktailapp/ui_windows/signIn_window.dart';
 import 'package:cocktailapp/ui_windows/profile_window.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'models/cocktail_model.dart';
 
@@ -13,7 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FlutterConfig.loadEnvVariables();
-
+  await Permission.location.request();
+  // await _requestLocationPermission();
   runApp(
     ChangeNotifierProvider(
       create: (context) => CocktailProvider(),
@@ -66,6 +68,7 @@ class CocktailProvider with ChangeNotifier {
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final String? username;
+  // final bool isLoggedIn;
   const CommonAppBar({Key? key, this.username, this.showBackButton = true})
         : super(key: key);
 
