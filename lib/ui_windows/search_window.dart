@@ -18,6 +18,7 @@ class SearchWindow extends StatefulWidget {
 
   @override
   _SearchWindow createState() => _SearchWindow();
+
 }
 
 class _SearchWindow extends State<SearchWindow>{
@@ -28,6 +29,55 @@ class _SearchWindow extends State<SearchWindow>{
   void dispose() {
     cocktailNameController.dispose(); // Dispose the controller when the widget is disposed
     super.dispose();
+  }
+
+  Future<void> _showCocktailNotFoundError(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Cocktail Not Found",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  "The cocktail '$cocktailName' doesn't exist. Please search for another cocktail.",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20.0),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    "OK",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -103,6 +153,11 @@ class _SearchWindow extends State<SearchWindow>{
           var network = await get(Uri.parse(mainUrl + cocktailName));
           var json = jsonDecode(network.body);
           print(network.body);
+
+          if (json['drinks'] == null || json['drinks'].isEmpty) {
+            await _showCocktailNotFoundError(context);
+            return;
+          }
 
           cm.name = json['drinks'][0]['strDrink'];
           cm.alcoholic = json['drinks'][0]['strAlcoholic'];
