@@ -12,9 +12,11 @@ class SignUpWindow extends StatefulWidget {
 
 class _SignUpWindowState extends State<SignUpWindow> {
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _userNameTextController = TextEditingController();
+  String _errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +64,9 @@ class _SignUpWindowState extends State<SignUpWindow> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // firebaseUIButton(context, "Sign Up", () {
-                    //   FirebaseAuth.instance
-                    //       .createUserWithEmailAndPassword(
-                    //       email: _emailTextController.text,
-                    //       password: _passwordTextController.text)
-                    //       .then((value) {
-                    //     print("Created New Account");
-                signInSignUpButton(context, false, () {
-
-                  FirebaseAuth.instance
+                signInSignUpButton(context, false, () async {
+                  try {
+                    final userCredential = await FirebaseAuth.instance
                       .createUserWithEmailAndPassword(
                       email: _emailTextController.text,
                       password: _passwordTextController.text)
@@ -79,18 +74,23 @@ class _SignUpWindowState extends State<SignUpWindow> {
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SearchWindow()));
-                  }).onError((error, stackTrace){
-                    print("Error ${error.toString()}");
-                  });
+                  });}
+                  catch (e) {
+                    print("Error occurred: $e");
+                    setState(() {
+                      _errorMessage = e.toString();
+                    });
+                  }
                 }),
-
-                // .onError((error, stackTrace) {
-                      //   print("Error ${error.toString()}");
-                      // });
-                    // })
+                    if (_errorMessage.isNotEmpty)
+                      Text(
+                        _errorMessage,
+                        style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, backgroundColor: Colors.white70),
+                      ),
                   ],
                 ),
-              ))),
+              )
+          )),
     );
   }
 }

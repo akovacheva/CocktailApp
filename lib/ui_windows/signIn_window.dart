@@ -11,10 +11,10 @@ class SignInWindow extends StatefulWidget {
 }
 
 class _SignInWindowState extends State<SignInWindow> {
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _emailTextController = TextEditingController();
-
+  String _errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +47,28 @@ class _SignInWindowState extends State<SignInWindow> {
                 SizedBox(
                   height: 20,
                 ),
-                signInSignUpButton(context, true, () {
-                  FirebaseAuth.instance.signInWithEmailAndPassword(
+                signInSignUpButton(context, true, () async {
+                  try {
+                    final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: _emailTextController.text,
-                      password: _passwordTextController.text).then((value){
+                      password: _passwordTextController.text,
+                    );
+                    // Successful login, navigate to the search window
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SearchWindow()));
-                  });
+                      MaterialPageRoute(builder: (context) => SearchWindow()),
+                    );
+                  } catch (e) {
+                    setState(() {
+                      _errorMessage = e.toString(); // Display the error message
+                    });
+                  }
                 }),
+                if (_errorMessage.isNotEmpty)
+                  Text(
+                    _errorMessage,
+                    style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, backgroundColor: Colors.white70),
+                  ),
                 signUpOption(),
                 skipOption(),
               ],
