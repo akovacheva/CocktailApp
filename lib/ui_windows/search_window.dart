@@ -22,6 +22,13 @@ class SearchWindow extends StatefulWidget {
 
 class _SearchWindow extends State<SearchWindow>{
   String cocktailName = "";
+  TextEditingController cocktailNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    cocktailNameController.dispose(); // Dispose the controller when the widget is disposed
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +60,12 @@ class _SearchWindow extends State<SearchWindow>{
         const SizedBox(height: 50,),
         //input
        TextField(
+         controller: cocktailNameController, // Use the TextEditingController
          // When a value is changed, here it will be stored
-         onChanged: (value){
-           cocktailName = value;
+         onChanged: (value) {
+           setState(() {
+             cocktailName = value; // Update the cocktailName
+           });
          },
          decoration: InputDecoration(
            prefixIcon: const Icon(
@@ -84,7 +94,8 @@ class _SearchWindow extends State<SearchWindow>{
 
         //Search button
         ElevatedButton(onPressed: () async {
-          if(cocktailName == null) return;
+          // if(cocktailName == null) return;
+          if (cocktailName.isEmpty) return;
 
           cocktailName.toLowerCase().replaceAll(' ', '_');
           CocktailManager cm = CocktailManager();
@@ -129,6 +140,9 @@ class _SearchWindow extends State<SearchWindow>{
 
           cm.ingredients = ingrdientList;
 
+          // Clear the text field value
+          cocktailNameController.clear();
+
           // put the other window on top of it, so we dont close it
           Navigator.push(
             context,
@@ -140,7 +154,8 @@ class _SearchWindow extends State<SearchWindow>{
                   glassType: cm.glassType,
                   pictureUrl: cm.pictureUrl,
                   instructions: cm.instructions,
-                  ingredients: cm.ingredients);
+                  ingredients: cm.ingredients,
+              );
             }),
           );
         },
@@ -154,6 +169,7 @@ class _SearchWindow extends State<SearchWindow>{
         ),
         ),
         const SizedBox(height: 20,),
+
         ElevatedButton(onPressed: () {
           Navigator.push(
             context,
