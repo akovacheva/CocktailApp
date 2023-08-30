@@ -7,6 +7,7 @@ import 'package:cocktailapp/ui_windows/signIn_window.dart';
 import 'package:cocktailapp/ui_windows/profile_window.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
 
 import 'models/cocktail_model.dart';
 
@@ -15,7 +16,6 @@ void main() async {
   await Firebase.initializeApp();
   await FlutterConfig.loadEnvVariables();
   await Permission.location.request();
-  // await _requestLocationPermission();
   runApp(
     ChangeNotifierProvider(
       create: (context) => CocktailProvider(),
@@ -56,12 +56,35 @@ class MyCocktailApp extends StatelessWidget {
 
 class CocktailProvider with ChangeNotifier {
   List<Cocktail> _cocktails = [];
+  int _lastRemovedIndex = -1;
+  late Cocktail _lastRemovedCocktail;
 
   List<Cocktail> get cocktails => _cocktails;
 
   void addCocktail(Cocktail cocktail) {
     _cocktails.add(cocktail);
     notifyListeners();
+  }
+
+  Cocktail removeCocktail(Cocktail cocktail) {
+    _lastRemovedIndex = _cocktails.indexOf(cocktail);
+    _lastRemovedCocktail = cocktail; // Store the removed cocktail
+    _cocktails.remove(cocktail);
+    notifyListeners();
+    return cocktail; // Return the removed cocktail
+  }
+
+  void undoRemoveCocktail() {
+    if (_lastRemovedIndex != -1) {
+      _cocktails.insert(_lastRemovedIndex, _lastRemovedCocktail);
+      _lastRemovedIndex = -1;
+      _lastRemovedCocktail = Cocktail(
+        imageFile: File('path_to_placeholder_image_asset'),
+        name: '',
+        description: '',
+      ); // Reset the stored cocktail
+      notifyListeners();
+    }
   }
 }
 
@@ -72,9 +95,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   CommonAppBar(
       {Key? key,
-      this.username,
-      this.showBackButton = true,
-      this.showAppBarActions = true})
+        this.username,
+        this.showBackButton = true,
+        this.showAppBarActions = true})
       : super(key: key);
 
   @override

@@ -9,7 +9,35 @@ import 'cocktail_detail_window.dart';
 class MyCocktailsScreen extends StatelessWidget {
   final List<Cocktail> cocktails;
 
-  const MyCocktailsScreen(this.cocktails, {super.key});
+  const MyCocktailsScreen(this.cocktails, {Key? key}) : super(key: key);
+
+  void _showUndoPopup(BuildContext context, CocktailProvider cocktailProvider,
+      Cocktail removedCocktail) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Cocktail Deleted'),
+          content: Text('Do you want to undo the deletion?'),
+          actions: [
+            TextButton(
+              child: Text('Undo'),
+              onPressed: () {
+                cocktailProvider.undoRemoveCocktail();
+                Navigator.of(context).pop(); // Close the popup
+              },
+            ),
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the popup
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,30 +98,55 @@ class MyCocktailsScreen extends StatelessWidget {
                 itemCount: cocktails.length,
                 itemBuilder: (context, index) {
                   final cocktail = cocktails[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CocktailDetail(
-                              cocktail), // Navigate to detail screen
-                        ),
-                      );
+                  return Dismissible(
+                    key: Key(cocktail.name),
+                    direction: DismissDirection.endToStart,
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                    ),
+                    dismissThresholds: {
+                      DismissDirection.endToStart: 0.5,
                     },
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                      elevation: 5,
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(10),
-                        leading: Image.file(
-                          cocktail.imageFile,
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
+                    onDismissed: (direction) {
+                      final removedCocktail =
+                          cocktailProvider.removeCocktail(cocktail);
+                      _showUndoPopup(
+                          context, cocktailProvider, removedCocktail);
+                    },
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CocktailDetail(cocktail),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 20,
                         ),
-                        title: Text(cocktail.name),
-                        subtitle: Text(cocktail.description),
+                        elevation: 5,
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(10),
+                          leading: cocktail.imageFile != null
+                              ? Image.file(
+                                  cocktail.imageFile!,
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                )
+                              : Icon(Icons.image),
+                          title: Text(cocktail.name ?? ''),
+                          subtitle: Text(cocktail.description ?? ''),
+                        ),
                       ),
                     ),
                   );
