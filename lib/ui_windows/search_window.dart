@@ -12,6 +12,10 @@ import 'package:cocktailapp/components/random_cocktail_widget.dart';
 import 'map.dart';
 
 class SearchWindow extends StatefulWidget {
+  final bool showAppBarActions;
+
+  SearchWindow({this.showAppBarActions = true});
+
   @override
   _SearchWindow createState() => _SearchWindow();
 }
@@ -22,7 +26,7 @@ class _SearchWindow extends State<SearchWindow>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar(showBackButton: false),
+      appBar: CommonAppBar(showBackButton: false, showAppBarActions: widget.showAppBarActions),
     body: Container(
     width: MediaQuery.of(context).size.width ,
     height: MediaQuery.of(context).size.height,

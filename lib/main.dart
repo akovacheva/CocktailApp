@@ -67,47 +67,57 @@ class CocktailProvider with ChangeNotifier {
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
+  final bool showAppBarActions;
   final String? username;
-  // final bool isLoggedIn;
-  const CommonAppBar({Key? key, this.username, this.showBackButton = true})
-        : super(key: key);
+
+  CommonAppBar(
+      {Key? key,
+      this.username,
+      this.showBackButton = true,
+      this.showAppBarActions = true})
+      : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(automaticallyImplyLeading: showBackButton,
-    backgroundColor: appBarColor, // Set transparent background
-        title:
-        Image.asset(
-          "assets/images/white-no-background.png",
-          width: 100,
-          height: 100,
-        ),
-        centerTitle: true,
-    actions: [
-    IconButton(
-    icon: const Icon(Icons.person),
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProfileScreen()),
-      );
-      },
-    ),
-      IconButton(
-        icon: const Icon(Icons.logout_outlined),
-        onPressed: () {
-          FirebaseAuth.instance.signOut().then((value) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SignInWindow()),
-            );
-          });
-        },
+    final user = FirebaseAuth.instance.currentUser;
+    final isLoggedIn = user != null;
+
+    return AppBar(
+      automaticallyImplyLeading: showBackButton,
+      backgroundColor: appBarColor,
+      title: Image.asset(
+        "assets/images/white-no-background.png",
+        width: 100,
+        height: 100,
       ),
-    ],
+      centerTitle: true,
+      actions: [
+        if (showAppBarActions && isLoggedIn)
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+            },
+          ),
+        if (showAppBarActions && isLoggedIn)
+          IconButton(
+            icon: const Icon(Icons.logout_outlined),
+            onPressed: () {
+              FirebaseAuth.instance.signOut().then((value) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInWindow()),
+                );
+              });
+            },
+          ),
+      ],
     );
   }
 }
