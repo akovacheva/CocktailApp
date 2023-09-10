@@ -18,17 +18,17 @@ class MyCocktailsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Cocktail Deleted'),
-          content: Text('Do you want to undo the deletion?'),
+          content: Text('Are you sure you want to delete this item?'),
           actions: [
             TextButton(
-              child: Text('Undo'),
+              child: Text('No'),
               onPressed: () {
                 cocktailProvider.undoRemoveCocktail();
                 Navigator.of(context).pop(); // Close the popup
               },
             ),
             TextButton(
-              child: Text('Cancel'),
+              child: Text('Yes'),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the popup
               },

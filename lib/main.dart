@@ -1,3 +1,4 @@
+import 'package:cocktailapp/ui_windows/add_your_own_recipe_window.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -86,19 +87,29 @@ class CocktailProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // void updateCocktail(Cocktail updatedCocktail) {
+  //   final index = _cocktails.indexWhere((c) => c.name == updatedCocktail.name);
+  //   if (index != -1) {
+  //     _cocktails[index] = updatedCocktail;
+  //     notifyListeners(); // Notify listeners to update the UI
+  //   }
+  // }
 }
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final bool showAppBarActions;
+  final bool showLoginIcon; // New flag for showing the login icon
   final String? username;
 
-  CommonAppBar(
-      {Key? key,
-        this.username,
-        this.showBackButton = true,
-        this.showAppBarActions = true})
-      : super(key: key);
+  CommonAppBar({
+    Key? key,
+    this.username,
+    this.showBackButton = true,
+    this.showAppBarActions = true,
+    this.showLoginIcon = true, // Initialize it with true
+  }) : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
@@ -128,18 +139,55 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
               );
             },
           ),
-        if (showAppBarActions && isLoggedIn)
+        if (showLoginIcon)
           IconButton(
-            icon: const Icon(Icons.logout_outlined),
+            icon: isLoggedIn
+                ? const Icon(Icons.logout) // Show logout icon when logged in
+                : const Icon(Icons.login_outlined), // Show login icon when not logged in
             onPressed: () {
-              FirebaseAuth.instance.signOut().then((value) {
+              if (isLoggedIn) {
+                // Handle logout logic here
+                FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignInWindow()),
+                  );
+                });
+              } else {
+                // Handle login logic here
+                // You can navigate to the login screen
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => SignInWindow()),
                 );
-              });
+              }
             },
           ),
+
+        // if (showAppBarActions && isLoggedIn) // Show the login icon based on the flag
+        //   IconButton(
+        //     icon: const Icon(Icons.login_outlined),
+        //     onPressed: () {
+        //       FirebaseAuth.instance.signOut().then((value) {
+        //         Navigator.pushReplacement(
+        //           context,
+        //           MaterialPageRoute(builder: (context) => SignInWindow()),
+        //         );
+        //       });
+        //     },
+        //   ),
+        // if (showLoginIcon) // Show the login icon based on the flag
+        //   IconButton(
+        //     icon: const Icon(Icons.login_outlined),
+        //     onPressed: () {
+        //       FirebaseAuth.instance.signOut().then((value) {
+        //         Navigator.pushReplacement(
+        //           context,
+        //           MaterialPageRoute(builder: (context) => SignInWindow()),
+        //         );
+        //       });
+        //     },
+        //   ),
       ],
     );
   }

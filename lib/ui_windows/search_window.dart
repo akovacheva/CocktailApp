@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cocktailapp/constraints.dart';
 import 'package:cocktailapp/services/cocktail_manager.dart';
@@ -82,9 +83,16 @@ class _SearchWindow extends State<SearchWindow>{
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final isLoggedIn = user != null; // Declare isLoggedIn here
     return Scaffold(
-      appBar: CommonAppBar(showBackButton: false, showAppBarActions: widget.showAppBarActions),
-    body: Container(
+      appBar: CommonAppBar(
+        showBackButton: false,
+        showAppBarActions: widget.showAppBarActions,
+        // Pass a flag to CommonAppBar to determine whether to show the login icon
+        showLoginIcon: isLoggedIn,
+      ),
+      body: Container(
     width: MediaQuery.of(context).size.width ,
     height: MediaQuery.of(context).size.height,
     decoration: const BoxDecoration(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
   File? imageFile;
   TextEditingController _cocktailNameController = TextEditingController();
   TextEditingController _cocktailDescriptionController =
-      TextEditingController();
+  TextEditingController();
   bool isFirstCameraClick = true;
 
   @override
@@ -93,7 +94,7 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
                   const SizedBox(width: 20),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => getImage(source: ImageSource.gallery),
+                      onPressed: () => getImage(context),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: btnColor,
                         shape: RoundedRectangleBorder(
@@ -117,87 +118,126 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
                       Icons.local_drink,
                       color: Colors.black45,
                     ),
-                  filled: true,
-                  fillColor: Colors.white54,
-                  hintText: 'Cocktail Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    filled: true,
+                    fillColor: Colors.white54,
+                    hintText: 'Cocktail Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _cocktailDescriptionController,
-                maxLines: 3,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.description,
-                    color: Colors.black45,
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _cocktailDescriptionController,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.description,
+                      color: Colors.black45,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white54,
+                    hintText: 'Cocktail Description',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  filled: true,
-                  fillColor: Colors.white54,
-                  hintText: 'Cocktail Description',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  textInputAction: TextInputAction.done, // Add this line
+                  // onEditingComplete: _saveCocktail,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _saveCocktail,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: btnColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    minimumSize: btnMinSize,
+                  ),
+                  child: const Text(
+                    'Save Cocktail',
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
-                textInputAction: TextInputAction.done, // Add this line
-                // onEditingComplete: _saveCocktail,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _saveCocktail,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: btnColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  minimumSize: btnMinSize,
-                ),
-                child: const Text(
-                  'Save Cocktail',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
-  }
-
-  void getImage({required ImageSource source}) async {
-    final file = await ImagePicker().pickImage(
-      source: source,
-      maxWidth: 240,
-      maxHeight: 180,
-      imageQuality: 70,
-    );
-
-    if (file?.path != null) {
-      setState(() {
-        imageFile = File(file!.path);
-      });
-    }
   }
 
   Future<void> captureImage() async {
-    if (isFirstCameraClick) {
-      var status = await Permission.camera.request();
-      if (status.isGranted) {
-        getImage(source: ImageSource.camera);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Camera permission is required')),
-        );
+    var status = await Permission.camera.request();
+
+    if (status.isGranted) {
+      // Capture an image from the camera
+      XFile? pickedFile = await ImagePicker().pickImage(
+        source: ImageSource.camera,
+        maxHeight: 1800,
+        maxWidth: 1000,
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          imageFile = File(pickedFile.path);
+        });
       }
-      // Mark the first click as done
-      isFirstCameraClick = false;
-    } else {
-      // Directly capture image
-      getImage(source: ImageSource.camera);
+    } else if (status.isDenied || status.isPermanentlyDenied) {
+      // Permission denied. Show a dialog to request permission.
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Camera Permission'),
+            content: Text(
+                'CocktailApp needs access to your camera to capture images.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Always'),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  var result = await Permission.camera.request();
+                  if (result.isGranted) {
+                    captureImage();
+                  } else {
+                    // Handle the case when the user denies permission even after selecting "Always."
+                  }
+                },
+              ),
+              TextButton(
+                child: Text('Only Once'),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  var result = await Permission.camera.request();
+                  if (result.isGranted) {
+                    captureImage();
+                  } else {
+                    // Handle the case when the user denies permission for "Only Once."
+                  }
+                },
+              ),
+              TextButton(
+                child: Text('Never'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // Handle the case when the user selects "Never."
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
+  }
+
+  getImage(context) async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 1800,
+      maxWidth: 1000,
+    );
   }
 
   void _saveCocktail() {
@@ -210,7 +250,8 @@ class _AddYourOwnRecipeScreenState extends State<AddYourOwnRecipeScreen> {
         description: _cocktailDescriptionController.text,
       );
 
-      final cocktailProvider = Provider.of<CocktailProvider>(context, listen: false);
+      final cocktailProvider = Provider.of<CocktailProvider>(
+          context, listen: false);
       cocktailProvider.addCocktail(newCocktail);
 
       Navigator.pop(context); // Close the screen

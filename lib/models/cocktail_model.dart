@@ -2,12 +2,24 @@ import 'dart:io';
 
 class Cocktail {
   final File imageFile;
-  final String name;
-  final String description;
+  late final String name;
+  late final String description;
 
   Cocktail({
     required this.imageFile,
     required this.name,
     required this.description,
   });
+
+  Cocktail copyWith({
+    File? imageFile,
+    String? name,
+    String? description,
+  }) {
+    return Cocktail(
+      imageFile: imageFile ?? this.imageFile,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    );
+  }
 }
