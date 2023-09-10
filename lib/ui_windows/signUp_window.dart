@@ -54,7 +54,7 @@ class _SignUpWindowState extends State<SignUpWindow> {
                     const SizedBox(
                       height: 20,
                     ),
-                    inputField("Enter Email Id", Icons.person_outline, false,
+                    inputField("Enter Email", Icons.person_outline, false,
                         _emailTextController),
                     const SizedBox(
                       height: 20,

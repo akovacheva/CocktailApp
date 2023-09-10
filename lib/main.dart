@@ -82,19 +82,19 @@ class CocktailProvider with ChangeNotifier {
       _lastRemovedCocktail = Cocktail(
         imageFile: File('path_to_placeholder_image_asset'),
         name: '',
-        description: '',
+        description: '', id: '',
       ); // Reset the stored cocktail
       notifyListeners();
     }
   }
 
-  // void updateCocktail(Cocktail updatedCocktail) {
-  //   final index = _cocktails.indexWhere((c) => c.name == updatedCocktail.name);
-  //   if (index != -1) {
-  //     _cocktails[index] = updatedCocktail;
-  //     notifyListeners(); // Notify listeners to update the UI
-  //   }
-  // }
+  void editCocktail(Cocktail oldCocktail, Cocktail editedCocktail) {
+    final index = _cocktails.indexWhere((cocktail) => cocktail.id == oldCocktail.id);
+    if (index != -1) {
+      _cocktails[index] = editedCocktail;
+      notifyListeners();
+    }
+  }
 }
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {

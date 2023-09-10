@@ -146,6 +146,19 @@ class MyCocktailsScreen extends StatelessWidget {
                               : Icon(Icons.image),
                           title: Text(cocktail.name ?? ''),
                           subtitle: Text(cocktail.description ?? ''),
+                          trailing: // Inside MyCocktailsScreen
+                              IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddYourOwnRecipeScreen(
+                                      editCocktail: cocktail),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
