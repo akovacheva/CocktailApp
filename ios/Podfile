@@ -1,0 +1,22 @@
+# Uncomment the next line to define a global platform for your project
+ platform :ios, '12.0'
+
+target 'Runner' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Runner
+  
+  # Add your Flutter-related pods here
+  pod 'Firebase/Auth' # For Firebase Authentication
+  pod 'Firebase/Core' # For Firebase Core
+  pod 'Firebase/Firestore' # For Firestore (if used)
+  pod 'Firebase/Analytics' # For Firebase Analytics (if used)
+
+  target 'RunnerTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+

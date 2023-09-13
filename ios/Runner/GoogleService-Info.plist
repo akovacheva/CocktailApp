@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>905984103750-turo75gjur2k6qafviam2j12sca1cntu.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDEvGU7q2oUmxjKaMd5rzTDPW5MPUmrk-E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>905984103750</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.cocktailapp</string>
+	<key>PROJECT_ID</key>
+	<string>cocktailapp-7baae</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cocktailapp-7baae.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:905984103750:ios:5e33c9a88dd053c9290147</string>
+</dict>
+</plist>
